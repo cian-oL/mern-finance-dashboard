@@ -6,9 +6,19 @@ import mongoose from "mongoose";
 import helmet from "helmet";
 import morgan from "morgan";
 
+import Kpi from "./models/kpi";
+import { kpis } from "./data/demoData";
+import kpiRoutes from "./routes/kpis";
+
 mongoose
   .connect(process.env.MONGODB_CONNECTION_STRING as string)
-  .then(() => console.log("Connected to database"))
+  .then(() => {
+    console.log("Connected to database");
+
+    // // dropping database to seed demo data (PERFORM ONCE ONLY)
+    // mongoose.connection.db.dropDatabase();
+    // Kpi.insertMany(kpis);
+  })
   .catch((err) => console.error(`${err}, did not connect to database`));
 
 const PORT = process.env.PORT || 9000;
